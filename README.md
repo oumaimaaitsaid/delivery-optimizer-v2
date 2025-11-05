@@ -1,5 +1,42 @@
 # 🚚 Delivery Tour Optimization System
 
+## 🔄 Version 2 (V2) – Améliorations et Mise en place
+
+Cette V2 est une évolution de la V1. Elle ajoute de nouvelles entités (Customer, DeliveryHistory), la gestion de migrations avec Liquibase, la configuration YAML par profils (dev/qa), l’activation d’un 3ème optimizer basé IA (Spring AI), la pagination/recherche avancée, et au moins un test d’intégration.
+
+### Branches et dépôt
+- Créez un nouveau dépôt pour V2 (ne pas modifier V1).
+- Branches recommandées: `main` (stable) et `dev` (intégration).
+
+### Base de données avec Liquibase
+- Fichiers à placer sous `src/main/resources/db/changelog/`:
+    - `db.changelog-master.xml`
+    - `db.changelog-v1.0-initial.xml` (baseline V1)
+    - `db.changelog-v2.0-new-entities.xml` (Customer, DeliveryHistory, FK, index, rollbacks)
+- Commandes Maven (exemples):
+    - `mvn liquibase:update`
+    - `mvn liquibase:rollbackCount -Dliquibase.rollbackCount=1`
+
+### Configuration YAML par profils
+- Remplacer `application.properties` par:
+    - `application.yml` (par défaut, active `dev`)
+    - `application-dev.yml` (H2)
+    - `application-qa.yml` (PostgreSQL/MySQL au choix)
+- Exemple de sélection de profil: `mvn spring-boot:run -Dspring-boot.run.profiles=qa`
+
+### Optimizer IA (Spring AI)
+- Interface commune `RouteOptimizer` avec implémentations (règles/heuristique/IA).
+- Activer l’IA via propriété: `optimizer.type=ai` (sinon `rule`/`heuristic`).
+- Provider LLM: local (Ollama/TinyLlama) ou cloud (OpenAI/HuggingFace) via `spring.ai.*`.
+- Sortie JSON attendue: `orderedDeliveries`, `recommendations`, `predictedRoutes`.
+
+### Pagination & Recherche
+- Utiliser Spring Data JPA: `Pageable`, méthodes dérivées (`findBy...`) et `@Query`.
+
+### Test d’intégration
+- Au minimum 1 test couvrant le passage d’un `Tour` à `COMPLETED` et la création de `DeliveryHistory` (avec calcul du `delay`).
+
+> Référez-vous aux sections ci-dessous pour les endpoints, la config existante et l’exécution. Les exemples V1 restent valables; la V2 ajoute des profils YAML, des migrations Liquibase et un optimizer IA activable par propriété.
 📌 Project Description
 Application web Spring Boot (Java 8+) pour gérer et optimiser des tournées de livraison. Elle compare deux algorithmes d’optimisation de routes: Nearest Neighbor (NN) et Clarke & Wright (CW), afin de réduire les distances parcourues et la consommation.
 
