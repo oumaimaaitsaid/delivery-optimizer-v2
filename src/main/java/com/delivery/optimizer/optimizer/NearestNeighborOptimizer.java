@@ -8,7 +8,15 @@ import com.delivery.optimizer.util.DistanceCalculator;
 import java.util.*;
 
 public class NearestNeighborOptimizer implements TourOptimizer{
-    private   DistanceCalculator  distanceCalculator;
+    private final DistanceCalculator distanceCalculator;
+
+    public NearestNeighborOptimizer() {
+        this(new DistanceCalculator());
+    }
+
+    public NearestNeighborOptimizer(DistanceCalculator distanceCalculator) {
+        this.distanceCalculator = distanceCalculator;
+    }
     @Override
     public List<Delivery> calculateOptimalTour(Warehouse warehouse, List<Delivery> deliveries) {
         List<Delivery> remaining = new ArrayList<>(deliveries);
