@@ -13,7 +13,7 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="latitude" type="DOUBLE"/>
             <column name="longitude" type="DOUBLE"/>
-            <column name="opening_hours" type="VARCHAR(255)"/>
+            <column name="openingHours" type="VARCHAR(255)"/>
         </createTable>
         <rollback>
             <dropTable tableName="WAREHOUSE"/>
@@ -27,9 +27,9 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(50)"/>
-            <column name="max_weight" type="DOUBLE"/>
-            <column name="max_volume" type="DOUBLE"/>
-            <column name="max_deliveries" type="INT"/>
+            <column name="maxWeight" type="DOUBLE"/>
+            <column name="maxVolume" type="DOUBLE"/>
+            <column name="maxDeliveries" type="INT"/>
         </createTable>
         <rollback>
             <dropTable tableName="VEHICLE"/>
@@ -79,9 +79,9 @@
             <column name="longitude" type="DOUBLE"/>
             <column name="weight" type="DOUBLE"/>
             <column name="volume" type="DOUBLE"/>
-            <column name="time_window" type="VARCHAR(255)"/>
+            <column name="timeWindow" type="VARCHAR(255)"/>
             <column name="address" type="VARCHAR(500)"/>
-            <column name="preferred_time_slot" type="VARCHAR(50)"/>
+            <column name="preferredTimeSlot" type="VARCHAR(50)"/>
             <column name="status" type="VARCHAR(50)"/>
             <column name="tour_id" type="BIGINT"/>
         </createTable>
