@@ -276,3 +276,36 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 2025-11-05 12:28:00.300  INFO 9152 --- [http-nio-8080-exec-6] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-11-05 12:28:00.300  INFO 9152 --- [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-11-05 12:28:00.305  INFO 9152 --- [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-11-05 15:54:27.834  INFO 9152 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-05 15:54:57.183  INFO 5016 --- [main] c.d.optimizer.DeliveryServiceTest        : Starting DeliveryServiceTest using Java 17.0.12 on ycode with PID 5016 (started by safiy in C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer)
+2025-11-05 15:54:57.184 DEBUG 5016 --- [main] c.d.optimizer.DeliveryServiceTest        : Running with Spring Boot v2.7.15, Spring v5.3.29
+2025-11-05 15:54:57.184  INFO 5016 --- [main] c.d.optimizer.DeliveryServiceTest        : The following 1 profile is active: "dev"
+2025-11-05 15:54:58.279  INFO 5016 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-05 15:54:58.378  INFO 5016 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 83 ms. Found 4 JPA repository interfaces.
+2025-11-05 15:54:58.929  INFO 5016 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-05 15:54:59.023  INFO 5016 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-11-05 15:54:59.271  INFO 5016 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-11-05 15:55:00.104  INFO 5016 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2025-11-05 15:55:00.860  INFO 5016 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-11-05 15:55:00.868  INFO 5016 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-05 15:55:01.778  WARN 5016 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-05 15:55:02.155  INFO 5016 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/deliveriesdb'
+2025-11-05 15:55:02.790  INFO 5016 --- [main] c.d.optimizer.DeliveryServiceTest        : Started DeliveryServiceTest in 6.086 seconds (JVM running for 7.24)
+2025-11-05 15:55:03.416  INFO 5016 --- [main] c.d.optimizer.service.TourService        : [DIST] routeSize=3, totalDistance=12.814166798865179
+2025-11-05 15:55:03.434  INFO 5016 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-05 16:05:13.366  INFO 17060 --- [main] c.d.optimizer.DeliveryServiceTest        : Starting DeliveryServiceTest using Java 17.0.12 on ycode with PID 17060 (started by safiy in C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer)
+2025-11-05 16:05:13.366 DEBUG 17060 --- [main] c.d.optimizer.DeliveryServiceTest        : Running with Spring Boot v2.7.15, Spring v5.3.29
+2025-11-05 16:05:13.366  INFO 17060 --- [main] c.d.optimizer.DeliveryServiceTest        : The following 1 profile is active: "dev"
+2025-11-05 16:05:14.485  INFO 17060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-05 16:05:14.577  INFO 17060 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 4 JPA repository interfaces.
+2025-11-05 16:05:15.216  INFO 17060 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-05 16:05:15.296  INFO 17060 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-11-05 16:05:15.552  INFO 17060 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-11-05 16:05:16.217  INFO 17060 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2025-11-05 16:05:16.953  INFO 17060 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-11-05 16:05:16.962  INFO 17060 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-05 16:05:17.886  WARN 17060 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-05 16:05:18.231  INFO 17060 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/deliveriesdb'
+2025-11-05 16:05:18.849  INFO 17060 --- [main] c.d.optimizer.DeliveryServiceTest        : Started DeliveryServiceTest in 6.002 seconds (JVM running for 7.009)
+2025-11-05 16:05:19.419  INFO 17060 --- [main] c.d.optimizer.service.TourService        : [DIST] routeSize=3, totalDistance=12.814166798865179
+2025-11-05 16:05:19.439  INFO 17060 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
