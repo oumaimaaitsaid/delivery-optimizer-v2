@@ -1,6 +1,6 @@
 package com.delivery.optimizer.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity

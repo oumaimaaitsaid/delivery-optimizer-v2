@@ -5,7 +5,7 @@ import com.delivery.optimizer.model.Warehouse;
 import com.delivery.optimizer.util.DistanceCalculator;
 
 import java.util.*;
-
+@Component
 public class ClarkeWrightOptimizer implements TourOptimizer {
     private final DistanceCalculator distanceCalculator;
 

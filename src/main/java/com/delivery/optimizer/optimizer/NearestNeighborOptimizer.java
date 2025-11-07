@@ -6,7 +6,7 @@ import com.delivery.optimizer.util.DistanceCalculator;
 
 
 import java.util.*;
-
+@Component
 public class NearestNeighborOptimizer implements TourOptimizer{
     private final DistanceCalculator distanceCalculator;
 
