@@ -6,7 +6,7 @@ import com.delivery.optimizer.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime; // N'ti9nou men import
+import java.time.LocalTime;
 
 @Service
 @RequiredArgsConstructor
