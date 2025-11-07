@@ -1,0 +1,104 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- 1) WAREHOUSE -->
+    <changeSet id="v1-001-create-warehouse" author="you">
+        <createTable tableName="WAREHOUSE">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="openingHours" type="VARCHAR(255)"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="WAREHOUSE"/>
+        </rollback>
+    </changeSet>
+
+    <!-- 2) VEHICLE -->
+    <changeSet id="v1-002-create-vehicle" author="you">
+        <createTable tableName="VEHICLE">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)"/>
+            <column name="maxWeight" type="DOUBLE"/>
+            <column name="maxVolume" type="DOUBLE"/>
+            <column name="maxDeliveries" type="INT"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="VEHICLE"/>
+        </rollback>
+    </changeSet>
+
+    <!-- 3) TOUR -->
+    <changeSet id="v1-003-create-tour" author="you">
+        <createTable tableName="TOUR">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="DATE"/>
+            <column name="vehicle_id" type="BIGINT"/>
+            <column name="warehouse_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="TOUR"
+                                 baseColumnNames="vehicle_id"
+                                 referencedTableName="VEHICLE"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_tour_vehicle"/>
+        <addForeignKeyConstraint baseTableName="TOUR"
+                                 baseColumnNames="warehouse_id"
+                                 referencedTableName="WAREHOUSE"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_tour_warehouse"/>
+        <createIndex tableName="TOUR" indexName="idx_tour_vehicle">
+            <column name="vehicle_id"/>
+        </createIndex>
+        <createIndex tableName="TOUR" indexName="idx_tour_warehouse">
+            <column name="warehouse_id"/>
+        </createIndex>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="TOUR" constraintName="fk_tour_vehicle"/>
+            <dropForeignKeyConstraint baseTableName="TOUR" constraintName="fk_tour_warehouse"/>
+            <dropTable tableName="TOUR"/>
+        </rollback>
+    </changeSet>
+
+    <!-- 4) DELIVERY -->
+    <changeSet id="v1-004-create-delivery" author="you">
+        <createTable tableName="DELIVERY">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="weight" type="DOUBLE"/>
+            <column name="volume" type="DOUBLE"/>
+            <column name="timeWindow" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="preferredTimeSlot" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="tour_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="DELIVERY"
+                                 baseColumnNames="tour_id"
+                                 referencedTableName="TOUR"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_delivery_tour"/>
+        <createIndex tableName="DELIVERY" indexName="idx_delivery_tour">
+            <column name="tour_id"/>
+        </createIndex>
+        <createIndex tableName="DELIVERY" indexName="idx_delivery_status">
+            <column name="status"/>
+        </createIndex>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DELIVERY" constraintName="fk_delivery_tour"/>
+            <dropTable tableName="DELIVERY"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

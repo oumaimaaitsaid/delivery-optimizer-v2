@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/deliveriesdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+logging:
+  level:
+    root: INFO
+    com.delivery.optimizer: DEBUG
+  file:
+    path: logs
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"

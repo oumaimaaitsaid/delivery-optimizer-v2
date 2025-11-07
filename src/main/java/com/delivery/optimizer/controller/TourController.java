@@ -167,7 +167,7 @@ public class TourController {
                     winner);
             return res;
         } catch (ResponseStatusException ex) {
-            log.warn("[COMPARE] {} {} - {}", HttpStatus.valueOf(ex.getStatus().value()), ex.getStatus(), ex.getReason());
+            log.warn("[COMPARE] {} {} - {}", HttpStatus.valueOf(ex.getStatusCode().value()), ex.getStatusCode(), ex.getReason());
             throw ex;
         } catch (Exception ex) {
             log.error("[COMPARE] Erreur inattendue", ex);

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 
 import java.util.List;
-
+@Service
 public class TourService {
     private final TourOptimizer optimizer;
    private  final DistanceCalculator  distanceCalculator;

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- v2-001: CUSTOMER table -->
+    <changeSet id="v2-001-create-customer" author="cascade">
+        <createTable tableName="CUSTOMER">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="preferredTimeSlot" type="VARCHAR(50)"/>
+        </createTable>
+        <createIndex tableName="CUSTOMER" indexName="idx_customer_name">
+            <column name="name"/>
+        </createIndex>
+        <rollback>
+            <dropIndex indexName="idx_customer_name" tableName="CUSTOMER"/>
+            <dropTable tableName="CUSTOMER"/>
+        </rollback>
+    </changeSet>
+
+    <!-- v2-002: DELIVERY.customer_id FK to CUSTOMER -->
+    <changeSet id="v2-002-alter-delivery-add-customer" author="cascade">
+        <addColumn tableName="DELIVERY">
+            <column name="customer_id" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="DELIVERY"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="CUSTOMER"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_delivery_customer"/>
+        <createIndex tableName="DELIVERY" indexName="idx_delivery_customer">
+            <column name="customer_id"/>
+        </createIndex>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DELIVERY" constraintName="fk_delivery_customer"/>
+            <dropIndex indexName="idx_delivery_customer" tableName="DELIVERY"/>
+            <dropColumn tableName="DELIVERY" columnName="customer_id"/>
+        </rollback>
+    </changeSet>
+
+    <!-- v2-003: DELIVERY_HISTORY table (snapshot) -->
+    <changeSet id="v2-003-create-delivery-history" author="cascade">
+        <createTable tableName="DELIVERY_HISTORY">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="delivery_id" type="BIGINT"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="tour_id" type="BIGINT"/>
+            <column name="date" type="DATE"/>
+            <column name="plannedTime" type="TIMESTAMP"/>
+            <column name="actualTime" type="TIMESTAMP"/>
+            <column name="delayMinutes" type="INT"/>
+            <column name="dayOfWeek" type="VARCHAR(10)"/>
+            <!-- Snapshot of customer data at delivery time for analytics -->
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="preferredTimeSlot" type="VARCHAR(50)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="DELIVERY_HISTORY"
+                                 baseColumnNames="delivery_id"
+                                 referencedTableName="DELIVERY"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_hist_delivery"/>
+        <addForeignKeyConstraint baseTableName="DELIVERY_HISTORY"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="CUSTOMER"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_hist_customer"/>
+        <addForeignKeyConstraint baseTableName="DELIVERY_HISTORY"
+                                 baseColumnNames="tour_id"
+                                 referencedTableName="TOUR"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_hist_tour"/>
+
+        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_tour">
+            <column name="tour_id"/>
+        </createIndex>
+        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_dayOfWeek">
+            <column name="dayOfWeek"/>
+        </createIndex>
+        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_customer">
+            <column name="customer_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DELIVERY_HISTORY" constraintName="fk_hist_delivery"/>
+            <dropForeignKeyConstraint baseTableName="DELIVERY_HISTORY" constraintName="fk_hist_customer"/>
+            <dropForeignKeyConstraint baseTableName="DELIVERY_HISTORY" constraintName="fk_hist_tour"/>
+            <dropTable tableName="DELIVERY_HISTORY"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
