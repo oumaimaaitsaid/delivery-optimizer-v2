@@ -2447,3 +2447,24 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2025-11-07T11:21:14.772+01:00  INFO 22004 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
 2025-11-07T11:21:14.805+01:00  INFO 22004 --- [main] c.d.o.DeliveryOptimizerApplication       : Started DeliveryOptimizerApplication in 8.113 seconds (process running for 8.876)
 2025-11-07T11:29:02.322+01:00  INFO 22004 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-07T11:29:06.396+01:00  INFO 15748 --- [main] c.d.o.DeliveryOptimizerApplication       : Starting DeliveryOptimizerApplication v1.0-SNAPSHOT using Java 17.0.17 with PID 15748 (C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer\target\delivery-optimizer-1.0-SNAPSHOT.jar started by safiy in C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer)
+2025-11-07T11:29:06.400+01:00 DEBUG 15748 --- [main] c.d.o.DeliveryOptimizerApplication       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-11-07T11:29:06.401+01:00  INFO 15748 --- [main] c.d.o.DeliveryOptimizerApplication       : The following 1 profile is active: "dev"
+2025-11-07T11:29:07.870+01:00  INFO 15748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-07T11:29:08.012+01:00  INFO 15748 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 125 ms. Found 4 JPA repository interfaces.
+2025-11-07T11:29:09.205+01:00  INFO 15748 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-07T11:29:09.221+01:00  INFO 15748 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-07T11:29:09.222+01:00  INFO 15748 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-11-07T11:29:09.313+01:00  INFO 15748 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-07T11:29:09.314+01:00  INFO 15748 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2779 ms
+2025-11-07T11:29:10.082+01:00  INFO 15748 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/deliveriesdb'
+2025-11-07T11:29:10.278+01:00  INFO 15748 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-07T11:29:10.445+01:00  INFO 15748 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-11-07T11:29:10.619+01:00  INFO 15748 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-07T11:29:11.389+01:00  INFO 15748 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-07T11:29:11.465+01:00  WARN 15748 --- [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-07T11:29:13.158+01:00  INFO 15748 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-07T11:29:13.271+01:00  INFO 15748 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-07T11:29:13.955+01:00  WARN 15748 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-07T11:29:14.574+01:00  INFO 15748 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-11-07T11:29:14.610+01:00  INFO 15748 --- [main] c.d.o.DeliveryOptimizerApplication       : Started DeliveryOptimizerApplication in 9.322 seconds (process running for 10.124)
