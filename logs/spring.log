@@ -768,3 +768,38 @@ Action:
 
 Make sure a Liquibase changelog is present at the configured path.
 
+2025-11-09T22:20:57.594+01:00  INFO 384 --- [main] c.d.o.DeliveryOptimizerApplication       : Starting DeliveryOptimizerApplication using Java 17.0.12 with PID 384 (C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer\target\classes started by safiy in C:\Users\safiy\Downloads\ProjectsJava\delivery-optimizer-v2\delivery-optimizer)
+2025-11-09T22:20:57.596+01:00 DEBUG 384 --- [main] c.d.o.DeliveryOptimizerApplication       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-11-09T22:20:57.597+01:00  INFO 384 --- [main] c.d.o.DeliveryOptimizerApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-11-09T22:20:58.329+01:00  INFO 384 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-09T22:20:58.487+01:00  INFO 384 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 150 ms. Found 5 JPA repository interfaces.
+2025-11-09T22:20:59.022+01:00  INFO 384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-11-09T22:20:59.031+01:00  INFO 384 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-09T22:20:59.031+01:00  INFO 384 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-11-09T22:20:59.106+01:00  INFO 384 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-09T22:20:59.107+01:00  INFO 384 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1465 ms
+2025-11-09T22:20:59.141+01:00  INFO 384 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-09T22:20:59.432+01:00  INFO 384 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn1: url=jdbc:h2:file:./data/deliveriesdb user=SA
+2025-11-09T22:20:59.434+01:00  INFO 384 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-09T22:20:59.445+01:00  INFO 384 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/deliveriesdb'
+2025-11-09T22:20:59.585+01:00  INFO 384 --- [main] liquibase.database                       : Set default schema name to PUBLIC
+2025-11-09T22:21:00.298+01:00  INFO 384 --- [main] liquibase.changelog                      : Reading from PUBLIC.DATABASECHANGELOG
+2025-11-09T22:21:00.383+01:00  INFO 384 --- [main] liquibase.changelog                      : Reading from PUBLIC.DATABASECHANGELOG
+2025-11-09T22:21:00.396+01:00  INFO 384 --- [main] liquibase.util                           : UPDATE SUMMARY
+2025-11-09T22:21:00.397+01:00  INFO 384 --- [main] liquibase.util                           : Run:                          0
+2025-11-09T22:21:00.397+01:00  INFO 384 --- [main] liquibase.util                           : Previously run:               7
+2025-11-09T22:21:00.397+01:00  INFO 384 --- [main] liquibase.util                           : Filtered out:                 0
+2025-11-09T22:21:00.398+01:00  INFO 384 --- [main] liquibase.util                           : -------------------------------
+2025-11-09T22:21:00.398+01:00  INFO 384 --- [main] liquibase.util                           : Total change sets:            7
+2025-11-09T22:21:00.398+01:00  INFO 384 --- [main] liquibase.util                           : Update summary generated
+2025-11-09T22:21:00.426+01:00  INFO 384 --- [main] liquibase.lockservice                    : Successfully released change log lock
+2025-11-09T22:21:00.427+01:00  INFO 384 --- [main] liquibase.command                        : Command execution complete
+2025-11-09T22:21:00.525+01:00  INFO 384 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-09T22:21:00.603+01:00  INFO 384 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-11-09T22:21:00.647+01:00  INFO 384 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-09T22:21:00.862+01:00  INFO 384 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-09T22:21:01.907+01:00  INFO 384 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-09T22:21:01.910+01:00  INFO 384 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-09T22:21:02.401+01:00  WARN 384 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-09T22:21:02.957+01:00  INFO 384 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-11-09T22:21:02.971+01:00  INFO 384 --- [main] c.d.o.DeliveryOptimizerApplication       : Started DeliveryOptimizerApplication in 5.874 seconds (process running for 6.341)
