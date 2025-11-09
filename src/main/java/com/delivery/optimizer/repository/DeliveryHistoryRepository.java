@@ -1,5 +1,5 @@
 package com.delivery.optimizer.repository;
-
+import org.springframework.stereotype.Repository;
 import com.delivery.optimizer.model.DeliveryHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

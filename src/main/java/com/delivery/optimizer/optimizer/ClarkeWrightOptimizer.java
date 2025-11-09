@@ -1,10 +1,11 @@
 package com.delivery.optimizer.optimizer;
-
+import org.springframework.stereotype.Component;
 import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.model.Warehouse;
 import com.delivery.optimizer.util.DistanceCalculator;
-
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import java.util.*;
+@ConditionalOnProperty(name = "optimizer.type", havingValue = "CW")
 @Component
 public class ClarkeWrightOptimizer implements TourOptimizer {
     private final DistanceCalculator distanceCalculator;

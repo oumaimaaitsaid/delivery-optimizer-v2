@@ -1,16 +1,58 @@
-# Propriété PAR DÉFAUT pour choisir l'algorithme (NN, CW, ou AI)
-optimizer:
-  type: NN
-
+# =========================================
+# Fichier: application.yml
+# =========================================
 spring:
-  jpa:
-    show-sql: false
+  # =========================================
+  # Configuration de la base de données (H2)
+  # =========================================
+  datasource:
+    url: jdbc:h2:file:./data/deliveriesdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
 
-liquibase:
-    enabled: true
+  # Console H2 (http://localhost:8080/h2-console)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # =========================================
+  # Configuration JPA
+  # =========================================
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+
+
+  main:
+    allow-bean-definition-overriding: true
+
+
+  liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+
+# =========================================
+# Configuration de l'Optimizer
+# =========================================
+optimizer:
+  type: "NN"
+
+# =========================================
+# Configuration du Logging
+# =========================================
 logging:
   level:
     root: INFO
-    com.delivery.optimizer: INFO
+    com.delivery.optimizer: DEBUG
+  file:
+    path: logs
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"

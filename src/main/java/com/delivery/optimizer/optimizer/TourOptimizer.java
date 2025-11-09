@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TourOptimizer {
 
-    OptimizedRoute optimize(Warehouse warehouse, List<Delivery> deliveries);
+    List<Delivery> calculateOptimalTour (Warehouse warehouse, List<Delivery> deliveries);
 }

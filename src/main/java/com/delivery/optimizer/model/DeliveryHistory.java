@@ -42,8 +42,7 @@ public class DeliveryHistory {
     private LocalTime actualTime;
 
     // Le délai (actualTime - plannedTime)
-    private Long delayInSeconds;
-
+    private Long delayInMinutes;
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 

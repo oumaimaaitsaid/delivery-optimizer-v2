@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "DELIVERY")
@@ -31,4 +33,12 @@ public class Delivery {
     @JoinColumn(name ="tour_id")
     private Tour tour;
 
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    private LocalDate date;
+    private LocalTime plannedTime;
+    private LocalTime actualTime;
 }

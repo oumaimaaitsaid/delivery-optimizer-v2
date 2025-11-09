@@ -5,6 +5,7 @@ import com.delivery.optimizer.model.DeliveryStatus;
 import com.delivery.optimizer.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 
@@ -23,7 +24,7 @@ public class DeliveryService {
         delivery.setStatus(newStatus);
 
         // --- LOGIQUE V2 : CRÉATION DE L'HISTORIQUE ---
-        if (newStatus == DeliveryStatus.COMPLETED) {
+        if (newStatus == DeliveryStatus.DELIVERED) {
             delivery.setActualTime(LocalTime.now());
             historyService.createHistoryFromCompletedDelivery(delivery);
         }

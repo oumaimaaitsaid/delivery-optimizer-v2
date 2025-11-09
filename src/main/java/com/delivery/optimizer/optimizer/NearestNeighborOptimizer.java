@@ -1,11 +1,14 @@
 package com.delivery.optimizer.optimizer;
-
+import org.springframework.stereotype.Component;
 import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.model.Warehouse;
 import com.delivery.optimizer.util.DistanceCalculator;
+import org.springframework.context.annotation.Primary;
 
 
 import java.util.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+@ConditionalOnProperty(name = "optimizer.type", havingValue = "NN")
 @Component
 public class NearestNeighborOptimizer implements TourOptimizer{
     private final DistanceCalculator distanceCalculator;
