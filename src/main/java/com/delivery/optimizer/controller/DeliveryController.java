@@ -1,5 +1,5 @@
 package com.delivery.optimizer.controller;
-
+import com.delivery.optimizer.repository.CustomerRepository;
 import com.delivery.optimizer.dto.DeliveryDTO;
 import com.delivery.optimizer.mapper.DeliveryMapper;
 import com.delivery.optimizer.model.Delivery;
@@ -15,11 +15,13 @@ import java.util.stream.Collectors;
 public class DeliveryController {
     private final DeliveryRepository deliveryRepository;
     private final TourRepository tourRepository;
+    private final CustomerRepository customerRepository;
 
-    public DeliveryController(DeliveryRepository deliveryRepository , TourRepository tourRepository)
+    public DeliveryController(DeliveryRepository deliveryRepository , TourRepository tourRepository,CustomerRepository customerRepository)
     {
         this.deliveryRepository=deliveryRepository;
         this.tourRepository = tourRepository;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping
@@ -45,6 +47,13 @@ public class DeliveryController {
             delivery.setTour(tourRepository.findById(dto.getTourId())
                     .orElseThrow(() -> new RuntimeException("Tour not found")));
         }
+        if (dto.getCustomerId() == null) {
+            throw new RuntimeException("Customer ID is required"); // 7ssen tqol lihom
+        }
+
+        delivery.setCustomer(customerRepository.findById(dto.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found")));
+
 
         Delivery saved = deliveryRepository.save(delivery);
         return DeliveryMapper.toDTO(saved);

@@ -13,6 +13,7 @@ public class DeliveryDTO {
     private String address;
     private String preferredTimeSlot;
     private Long tourId;
+    private Long customerId;
 //getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
