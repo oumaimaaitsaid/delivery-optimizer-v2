@@ -2,32 +2,42 @@ package com.delivery.optimizer.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Data; // Ghadi nbeddlo hada
 import lombok.NoArgsConstructor;
-import java.util.List; // Ajout pour la collection
+import java.util.List;
+
+// --- Imports jdad li ghadi n7tajo ---
+import lombok.Getter;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
+import java.util.ArrayList; // Hada mohim bzzaf
 
 @Entity
-@Table(name = "customer") // Correction de la faute de frappe et convention
-@Data
+@Table(name = "customer")
+// --- 1. L CORRECTION DIAL L MOCHKIL 2 ---
+// Kan7eyydo @Data o kandiro dakchi li bghina b tefsil
+// bach n7ebso l "boucle infinie" dial @ToString
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "deliveryHistories") // Kanqolo lih maysta3melch had l lista f l equals
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer { // Correction de la faute de frappe
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // Exigence : un nom est requis
+    private String name;
     private String address;
     private double latitude;
     private double longitude;
     private String preferredTimeSlot;
 
-    // RELATION : Un Customer peut avoir plusieurs DeliveryHistory
-    // mappedBy = "customer" indique que c'est le champ 'customer' dans l'entité DeliveryHistory qui gère la relation.
-    // fetch = Lazy est la bonne pratique pour les collections.
+    // RELATION :
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<DeliveryHistory> deliveryHistories;
 
-    // Note : Si V1 utilise une entité 'Delivery', vous devriez également avoir une relation pour les 'Delivery' en cours.
-    // J'utilise ici 'DeliveryHistory' car c'est la nouvelle entité que nous créons.
+    // --- 2. L CORRECTION DIAL L MOCHKIL 1 (L MOHIM BZAF) ---
+    // Dima khass l collection tkon m-initialisée b liste khawya bach n éviter l NullPointerException
+    private List<DeliveryHistory> deliveryHistories = new ArrayList<>();
+
 }

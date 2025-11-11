@@ -36,3 +36,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+# Dossier de logs
+/logs/
+
+# Dossier de la base de données H2
+/data/
