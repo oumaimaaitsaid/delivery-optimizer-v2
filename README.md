@@ -154,6 +154,9 @@ docker build -t delivery-optimizer .
 ```
 docker run -p 8080:8080 -e SPRING_AI_OLLAMA_BASE-URL="[http://host.docker.internal:11434](http://host.docker.internal:11434)" delivery-optimizer
 ```
+## Diagrame de classe
+<img width="893" height="635" alt="image" src="https://github.com/user-attachments/assets/eaf10df1-a247-48cd-86b8-629a0c6a76cd" />
+
 📁 Structure du Projet (Fichiers Clés)
 
 ```
@@ -176,3 +179,4 @@ docker run -p 8080:8080 -e SPRING_AI_OLLAMA_BASE-URL="[http://host.docker.intern
     └── java/com/delivery/optimizer
         └── CustomerControllerTest.java (Test d'intégration V2)
         ```
+
