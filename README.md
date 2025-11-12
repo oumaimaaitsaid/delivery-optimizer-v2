@@ -1,214 +1,178 @@
-# 🚚 Delivery Tour Optimization System
+# 🚚 Système d'Optimisation de Tournées V2 (avec IA)
 
-## 🔄 Version 2 (V2) – Améliorations et Mise en place
+Ce projet est une application Spring Boot qui gère et optimise des tournées de livraison.
 
-Cette V2 est une évolution de la V1. Elle ajoute de nouvelles entités (Customer, DeliveryHistory), la gestion de migrations avec Liquibase, la configuration YAML par profils (dev/qa), l’activation d’un 3ème optimizer basé IA (Spring AI), la pagination/recherche avancée, et au moins un test d’intégration.
+Cette V2 est une refonte majeure de la V1. Elle remplace la configuration XML et `data.sql` par **Spring Boot 3**, **Java 17**, la configuration **YAML** par profils, et les migrations **Liquibase**.
 
-### Branches et dépôt
-- Créez un nouveau dépôt pour V2 (ne pas modifier V1).
-- Branches recommandées: `main` (stable) et `dev` (intégration).
+L'objectif principal est d'ajouter un troisième optimiseur basé sur **Spring AI (Ollama)**, capable d'analyser l'historique des livraisons (`DeliveryHistory`) pour proposer des tournées optimisées.
 
-### Base de données avec Liquibase
-- Fichiers à placer sous `src/main/resources/db/changelog/`:
-    - `db.changelog-master.xml`
-    - `db.changelog-v1.0-initial.xml` (baseline V1)
-    - `db.changelog-v2.0-new-entities.xml` (Customer, DeliveryHistory, FK, index, rollbacks)
-- Commandes Maven (exemples):
-    - `mvn liquibase:update`
-    - `mvn liquibase:rollbackCount -Dliquibase.rollbackCount=1`
+## 🛠️ Stack Technique (V2)
 
-### Configuration YAML par profils
-- Remplacer `application.properties` par:
-    - `application.yml` (par défaut, active `dev`)
-    - `application-dev.yml` (H2)
-    - `application-qa.yml` (PostgreSQL/MySQL au choix)
-- Exemple de sélection de profil: `mvn spring-boot:run -Dspring-boot.run.profiles=qa`
+* **Core:** Spring Boot 3.2.0 (Java 17)
+* **Data:** Spring Data JPA (Hibernate)
+* **Base de données:** H2 (pour `dev`) & PostgreSQL (pour `qa`, *si configuré*)
+* **Migrations:** Liquibase (remplace `ddl-auto` et `data.sql`)
+* **API:** Spring Web (REST)
+* **Doc API:** Springdoc-OpenAPI (Swagger)
+* **IA (LLM):** Spring AI
+* **Moteur IA Local:** Ollama (avec les modèles `gemma:2b` ou `mistral`)
+* **Conteneurisation:** Docker
+* **Utilitaires:** Lombok, Jackson (avec le module `jackson-datatype-hibernate6`)
 
-### Optimizer IA (Spring AI)
-- Interface commune `RouteOptimizer` avec implémentations (règles/heuristique/IA).
-- Activer l’IA via propriété: `optimizer.type=ai` (sinon `rule`/`heuristic`).
-- Provider LLM: local (Ollama/TinyLlama) ou cloud (OpenAI/HuggingFace) via `spring.ai.*`.
-- Sortie JSON attendue: `orderedDeliveries`, `recommendations`, `predictedRoutes`.
+## ✨ Fonctionnalités Clés (V2)
 
-### Pagination & Recherche
-- Utiliser Spring Data JPA: `Pageable`, méthodes dérivées (`findBy...`) et `@Query`.
+* **Configuration YAML:** Remplacement de `.properties` par `.yml` avec gestion des profils (`dev`, `qa`).
+* **Gestion de DB (Liquibase):** Le schéma de la base de données est maintenant 100% géré par les scripts `changelog.xml`.
+* **Nouvelles Entités:** Ajout de `Customer` et `DeliveryHistory` pour tracer les performances.
+* **Logique Métier Avancée:** La complétion d'une `Delivery` (`/status?status=DELIVERED`) déclenche automatiquement la création d'un `DeliveryHistory`.
+* **Optimiseur IA (Spring AI):** Ajout d'un `AIOptimizer` qui :
+    1.  Analyse l'historique (`DeliveryHistory`).
+    2.  Analyse les nouvelles livraisons.
+    3.  Envoie un prompt détaillé à Ollama.
+    4.  Parse la réponse JSON (l'ordre optimisé et les recommandations).
+* **Activation par Profil:** Choix de l'optimiseur (IA, NN, ou CW) via `@ConditionalOnProperty` dans `application.yml`.
+* **Tests:** Ajout d'un test d'intégration (`@SpringBootTest`) pour l'API `CustomerController`.
+* **Docker:** Un `Dockerfile` multi-stage est inclus pour la conteneurisation.
 
-### Test d’intégration
-- Au minimum 1 test couvrant le passage d’un `Tour` à `COMPLETED` et la création de `DeliveryHistory` (avec calcul du `delay`).
+## 🚀 Démarrage Rapide (L'essentiel)
 
-> Référez-vous aux sections ci-dessous pour les endpoints, la config existante et l’exécution. Les exemples V1 restent valables; la V2 ajoute des profils YAML, des migrations Liquibase et un optimizer IA activable par propriété.
-📌 Project Description
-Application web Spring Boot (Java 8+) pour gérer et optimiser des tournées de livraison. Elle compare deux algorithmes d’optimisation de routes: Nearest Neighbor (NN) et Clarke & Wright (CW), afin de réduire les distances parcourues et la consommation.
+Ce projet nécessite **Ollama** (le moteur IA) pour fonctionner en mode "AI".
 
-🎯 Main Objectives
-- Gérer une flotte hétérogène (Bike, Van, Truck) avec contraintes de capacité
-- Planifier et optimiser automatiquement les tournées
-- Comparer NN vs CW et mesurer distance/temps d’exécution
-- Calculer les distances à partir des coordonnées GPS (lat/lon)
-- Exposer une API REST testable via Swagger/Postman
-- Logging via SLF4J + Logback (pas de Log4j)
+### 1. Prérequis (Installation)
 
-🔗 Useful Links
-- Swagger UI: http://localhost:8080/swagger-ui/index.html
-- OpenAPI JSON: http://localhost:8080/v3/api-docs
-- H2 Console: http://localhost:8080/h2-console
+1.  **Java 17 & Maven:** Assurez-vous qu'ils sont installés.
+2.  **Docker Desktop (Optionnel):** Nécessaire si vous voulez utiliser le `Dockerfile`.
+3.  **Ollama (OBLIGATOIRE):**
+    * Téléchargez et installez Ollama depuis [ollama.com](https://ollama.com/).
+    * Lancez l'application Ollama (l'icône doit apparaître dans votre barre des tâches).
+    * Ouvrez un terminal et téléchargez les modèles (nous recommandons `gemma:2b` qui est léger) :
+        ```bash
+        ollama pull gemma:2b
+        ```
+      *(Si vous avez une bonne carte graphique, vous pouvez aussi tester `ollama pull mistral`)*
 
-🛠️ Technologies Used
-- Java 8+ (Maven)
-- Spring Boot 2.7.15 (Web, Data JPA)
-- H2 Database (file)
-- SLF4J + Logback (logging)
-- Swagger (springdoc-openapi)
-- Lombok
+### 2. Configuration (`application.yml`)
 
-## Run
-```bash
-mvn spring-boot:run
+Le fichier `application.yml` est la nouvelle configuration. Assurez-vous que le modèle d'IA est correct :
+
+```yaml
+spring:
+  # ... (configuration H2, JPA, etc.)
+  
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: gemma:2b # <-- T2ekked belli l model howa li 3endek (gemma:2b ola mistral)
+
+optimizer:
+  type: "AI" # <-- Hada howa li kay-activer l'IA. (Beddelha l "NN" ila bghiti t-testi l khor)
 ```
-- API: http://localhost:8080
-- Swagger UI: http://localhost:8080/swagger-ui.html (or /swagger-ui/index.html)
-- OpenAPI: http://localhost:8080/v3/api-docs
-- H2 Console: http://localhost:8080/h2-console
-  - JDBC: jdbc:h2:file:./data/deliveriesdb
-  - user: sa, password: (empty)
+### 3. Lancer l'Application
+Assurez-vous qu'Ollama est en cours d'exécution (l'icône est visible).
 
-## Configuration (src/main/resources/application.properties)
-- spring.datasource.url=jdbc:h2:file:./data/deliveriesdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
-- spring.jpa.hibernate.ddl-auto=update
-- spring.jpa.defer-datasource-initialization=true
-- spring.sql.init.mode=always
-- spring.h2.console.enabled=true
-
-## Seed data (executed on startup)
-- File: src/main/resources/data.sql
-- Creates:
-  - 1 Warehouse (id=1)
-  - 3 Vehicles (id=1..3): BIKE, VAN, TRUCK
-  - ~20 Deliveries (id=100..119)
-
-## Algorithms
-- Nearest Neighbor: simple greedy nearest point.
-- Clarke & Wright: simplified savings (tail->head merge only).
-- Distance via Haversine in `DistanceCalculator`.
-
-## Switch optimizer (XML wiring)
-- File: src/main/resources/applicationContext.xml
-- `tourService` constructor arg 0 can reference:
-  - `clarkeWrightOptimizer` (default)
-  - or `nearestNeighborOptimizer` (if defined)
-
-## Endpoints
-- Warehouse: `/warehouses` (CRUD)
-- Vehicle: `/vehicles` (CRUD)
-- Delivery: `/api/deliveries` (CRUD, optional PATCH status)
-- Tour: `/tours` (CRUD)
-- Compare NN vs CW: `POST /tours/compare`
-  - Request:
-    ```json
-    {"warehouseId":1, "vehicleId":2, "deliveryIds":[100,101,102,103]}
-    ```
-  - Response: ordered ids, totalDistance, durationMs per algo, and winner.
-
-## Validations
-- Warehouse: name required; latitude [-90,90]; longitude [-180,180]; openingHours HH:mm-HH:mm in 06:00–22:00.
-- Vehicle: type in {BIKE,VAN,TRUCK}; maxWeight/maxVolume/maxDeliveries > 0.
-- Delivery (si activées): address required; lat/lon bounds; weight/volume > 0; timeWindow/preferredTimeSlot HH:mm-HH:mm (optional); status in {PENDING,IN_TRANSIT,DELIVERED,FAILED}.
-
-## Error handling
-- Global `@ControllerAdvice` returns JSON with: timestamp, status, error, message, path.
-- Controllers also throw `ResponseStatusException` for 400/404.
-
-## Tests (suggested)
-- Unit: DistanceCalculator; NN vs CW on tiny dataset; TourService.getTotalDistance.
-- Integration: CRUD flows; POST /tours/compare.
-
-## Troubleshooting
-- Empty lists after startup: ensure data.sql ran (see properties above). Check H2 tables with console.
-- Swagger 404: ensure `springdoc-openapi-ui` dependency is present. Try /swagger-ui/index.html.
-- 400 on /tours/compare: body must contain warehouseId and non-empty deliveryIds with existing IDs.
-
-## Prerequisites
-- JDK 8+ (Java 17 also works)
-- Maven 3.6+
-
-Verify your toolchain:
-```bash
-mvn -v    
-java -version
+Lancez l'application Spring Boot :
 ```
-
-If your IDE flags annotations like `@ControllerAdvice` as syntax errors, set language level to Java 8+ (or remove the handler if you prefer local try/catch logging only).
-
-## Build and Run
-```bash
-mvn clean package
-mvn spring-boot:run
+mvn clean spring-boot:run
 ```
+🔗 Liens Utiles (Une fois lancé)
 
-Or run the packaged jar:
-```bash
-java -jar target/delivery-optimizer-1.0-SNAPSHOT.jar
-```
+* Swagger UI (Documentation API): http://localhost:8080/swagger-ui.html
 
-## Quick test of /tours/compare
-Example request (adjust IDs to match your data):
-```bash
-curl -X POST http://localhost:8080/tours/compare \
-  -H "Content-Type: application/json" \
-  -d '{
+* H2 Console (Base de données): http://localhost:8080/h2-console
+
+  * JDBC URL: jdbc:h2:file:./data/deliveriesdb
+
+  * User: sa
+
+  * Password: (laissez vide)
+
+🧪 Scénario de Test V2 (Démo)
+Voici comment tester la fonctionnalité principale de V2 (l'IA) avec Insomnia (ou Bruno).
+
+Étape 1: Créer l'Historique (Simuler une livraison passée)
+Nous devons d'abord créer un "historique" pour que l'IA puisse l'analyser.
+
+1. POST /api/customers (Créer un client 1)
+
+2. POST /api/deliveries (Créer une livraison 1, la lier au client 1, et ajouter plannedTime et date)
+
+3. PUT /api/deliveries/1/status?status=DELIVERED
+
+  . Cette action déclenche DeliveryHistoryService.
+
+4. Vérifier H2: Allez sur http://localhost:8080/h2-console et lancez SELECT * FROM DELIVERY_HISTORY;. Vous devriez voir une nouvelle ligne.
+
+*  Étape 2: Demander une Optimisation IA
+
+Maintenant que nous avons un historique, créons de nouvelles livraisons et demandons à l'IA de les optimiser.
+
+1. POST /api/deliveries (Créer une livraison 2)
+
+2. POST /api/deliveries (Créer une livraison 3)
+
+3. POST /api/warehouses (Créer un entrepôt 1)
+
+4. Lancer l'Optimiseur IA:
+
+    * Method: POST
+
+    * URL: http://localhost:8080/api/tours/optimize
+
+    * Body (JSON):
+   
+```{
     "warehouseId": 1,
-    "vehicleId": 2,
-    "deliveryIds": [100,101,102,103]
-  }'
-```
-Expected response (shape):
-```json
-{
-  "clarkeWright": {"orderedDeliveryIds": [...], "totalDistance": 123.45, "durationMs": 7.2},
-  "nearestNeighbor": {"orderedDeliveryIds": [...], "totalDistance": 140.01, "durationMs": 3.9},
-  "winner": "CLARKE_WRIGHT"
+    "deliveryIds": [2, 3]
 }
 ```
+* Étape 3: Analyser la Réponse
 
-## Logging (SLF4J + Logback, no Log4j)
-- App uses SLF4J API with Spring Boot's default Logback backend.
-- Configuration in `src/main/resources/application.properties`:
-  - `logging.level.root=INFO`
-  - `logging.level.com.delivery.optimizer=DEBUG`
-  - `logging.file.path=logs` (writes to `./logs/spring.log`)
-- Controller and Service log key events. You can adjust levels per package as needed.
+1. Réponse JSON (Dans Insomnia): Vous recevrez la liste des livraisons ([2, 3] ou [3, 2]) dans l'ordre optimisé par l'IA, avec toutes leurs données.
 
-Sample grep to see log statements in code:
-```bash
-grep -R "log\." -n src/main/java
+2. Recommandations de l'IA (Dans le Terminal): Regardez le terminal où vous avez lancé mvn spring-boot:run. Vous verrez le log de l'IA :
+
 ```
+--- Démarrage de l'Optimiseur IA (AIOptimizer) ---
+--- Envoi du Prompt à l'IA ---
+Réponse BRUTE de l'IA: {
+  "orderedDeliveries": [2, 3],
+  "recommendations": "L'ordre [2, 3] est optimal car la livraison 2 (Massira) est plus proche..."
+}
+Recommandations de l'IA: L'ordre [2, 3] est optimal car...
+--- Fin de l'Optimiseur IA (Succès) ---
+```
+🐳 Bonus: Lancer avec Docker
+Le projet inclut un Dockerfile multi-stage.
 
-## Screenshots
-Add screenshots under a docs folder and reference them below. Suggested paths:
-- `docs/screenshots/swagger-ui.png`
-- `docs/screenshots/h2-console.png`
-- `docs/screenshots/compare-response.png`
+1. Construire l'image:
+```
+docker build -t delivery-optimizer .
+```
+2. Lancer le conteneur: (Important: host.docker.internal est nécessaire pour que le conteneur puisse "voir" Ollama qui tourne sur votre PC).
 
-Example embeds:
-![Swagger UI](docs/screenshots/swagger-ui.png)
-![H2 Console](<img width="655" height="491" alt="image" src="https://github.com/user-attachments/assets/34ccf0e3-5927-44b1-ab21-16daae292a53" />
-)
-![POST /tours/compare (response)](<img width="815" height="937" alt="image" src="https://github.com/user-attachments/assets/100705cd-249e-4620-a795-36f7f51f3144" />
-)
+```
+docker run -p 8080:8080 -e SPRING_AI_OLLAMA_BASE-URL="[http://host.docker.internal:11434](http://host.docker.internal:11434)" delivery-optimizer
+```
+📁 Structure du Projet (Fichiers Clés)
 
-## What remains / Next steps
-- Ensure your IDE uses JDK 8+ (or 17) and Maven compiles with that version.
-- Validate `/tours/compare` with valid/invalid payloads and watch logs in console and `./logs/spring.log`.
-- Optionally remove `GlobalExceptionHandler` if you choose only local try/catch logging, or keep it once your language level is correct.
-- Add unit/integration tests for the optimizers and controller.
-
-## Project structure (key files)
-- controller: WarehouseController, VehicleController, DeliveryController, TourController
-- optimizer: ClarkeWrightOptimizer, TourOptimizer
-- service: TourService
-- util: DistanceCalculator
-- dto: DTOs + CompareRequest
-- mapper: Mappers
-- repository: Spring Data JPA repositories
-
-
+```
+├── main
+│   ├── java/com/delivery/optimizer
+│   │   ├── controller  (Points d'entrée API: TourController, CustomerController...)
+│   │   ├── dto         (DTOs: CompareRequest, DeliveryDTO...)
+│   │   ├── mapper      (Mappers: DeliveryMapper, CustomerMapper...)
+│   │   ├── model       (Entités JPA: Delivery, Customer, DeliveryHistory...)
+│   │   ├── optimizer   (Les 3 algos: AIOptimizer, NearestNeighborOptimizer...)
+│   │   ├── repository  (Spring Data JPA: DeliveryRepository, CustomerRepository...)
+│   │   ├── service     (Logique métier: TourService, DeliveryHistoryService...)
+│   │   └── DeliveryOptimizerApplication.java (Classe principale + Bean Hibernate6Module)
+│   │
+│   └── resources
+│       ├── db/changelog/ (Tous les scripts Liquibase)
+│       └── application.yml (Configuration principale)
+│
+└── test
+    └── java/com/delivery/optimizer
+        └── CustomerControllerTest.java (Test d'intégration V2)
+        ```
