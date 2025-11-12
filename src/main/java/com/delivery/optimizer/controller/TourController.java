@@ -2,7 +2,13 @@ package com.delivery.optimizer.controller;
 
 import com.delivery.optimizer.dto.TourDTO;
 import com.delivery.optimizer.mapper.TourMapper;
+import com.delivery.optimizer.dto.DeliveryDTO;
 import com.delivery.optimizer.model.Tour;
+
+import com.delivery.optimizer.dto.CompareRequest;
+import com.delivery.optimizer.mapper.DeliveryMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.delivery.optimizer.model.Delivery;
 import com.delivery.optimizer.model.Vehicle;
 import com.delivery.optimizer.model.Warehouse;
@@ -29,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tours")
+@RequestMapping("api/tours")
 public class TourController {
 
     private final TourRepository tourRepository;
@@ -103,7 +109,29 @@ public class TourController {
     public void delete(@PathVariable Long id) {
         tourRepository.deleteById(id);
     }
+    @PostMapping("/optimize")
+    public List<DeliveryDTO> optimizeTour(@RequestBody CompareRequest request) {
 
+        log.info("[OPTIMIZE_AI] Bda l 7sab l l'IA... WarehouseID: {}", request.getWarehouseId());
+
+
+        Warehouse warehouse = warehouseRepository.findById(request.getWarehouseId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Warehouse not found"));
+
+
+        List<Delivery> deliveriesToOptimize = deliveryRepository.findAllById(request.getDeliveryIds());
+        if (deliveriesToOptimize.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No valid deliveries found for these IDs");
+        }
+
+
+        List<Delivery> optimizedList = tourService.calculateOptimalTour(warehouse, deliveriesToOptimize);
+
+
+        return optimizedList.stream()
+                .map(DeliveryMapper::toDTO)
+                .collect(Collectors.toList());
+    }
     @PostMapping("/compare")
     public Map<String, Object> compare(@RequestBody CompareRequest req) {
         try {

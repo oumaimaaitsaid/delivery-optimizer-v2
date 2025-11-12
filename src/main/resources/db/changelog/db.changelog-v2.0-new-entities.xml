@@ -5,7 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <!-- v2-001: CUSTOMER table -->
     <changeSet id="v2-001-create-customer" author="cascade">
         <createTable tableName="CUSTOMER">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -26,9 +25,6 @@
         </rollback>
     </changeSet>
 
-
-
-    <!-- v2-003: DELIVERY_HISTORY table (snapshot) -->
     <changeSet id="v2-003-create-delivery-history" author="cascade">
         <createTable tableName="DELIVERY_HISTORY">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -37,16 +33,17 @@
             <column name="delivery_id" type="BIGINT"/>
             <column name="customer_id" type="BIGINT"/>
             <column name="tour_id" type="BIGINT"/>
-            <column name="date" type="DATE"/>
-            <column name="plannedTime" type="TIMESTAMP"/>
-            <column name="actualTime" type="TIMESTAMP"/>
-            <column name="delayMinutes" type="INT"/>
-            <column name="dayOfWeek" type="VARCHAR(10)"/>
-            <!-- Snapshot of customer data at delivery time for analytics -->
-            <column name="address" type="VARCHAR(500)"/>
-            <column name="latitude" type="DOUBLE"/>
-            <column name="longitude" type="DOUBLE"/>
-            <column name="preferredTimeSlot" type="VARCHAR(50)"/>
+            <column name="delivery_date" type="DATE"/>
+
+            <column name="planned_time" type="TIMESTAMP"/>
+            <column name="actual_time" type="TIMESTAMP"/>
+            <column name="delay_in_minutes" type="INT"/>
+            <column name="day_of_week" type="VARCHAR(10)"/>
+
+            <column name="actual_delivery_address" type="VARCHAR(500)"/>
+            <column name="actual_latitude" type="DOUBLE"/>
+            <column name="actual_longitude" type="DOUBLE"/>
+            <column name="preferred_time_slot" type="VARCHAR(50)"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="DELIVERY_HISTORY"
@@ -64,16 +61,6 @@
                                  referencedTableName="TOUR"
                                  referencedColumnNames="id"
                                  constraintName="fk_hist_tour"/>
-
-        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_tour">
-            <column name="tour_id"/>
-        </createIndex>
-        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_dayOfWeek">
-            <column name="dayOfWeek"/>
-        </createIndex>
-        <createIndex tableName="DELIVERY_HISTORY" indexName="idx_hist_customer">
-            <column name="customer_id"/>
-        </createIndex>
 
         <rollback>
             <dropForeignKeyConstraint baseTableName="DELIVERY_HISTORY" constraintName="fk_hist_delivery"/>

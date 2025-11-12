@@ -14,7 +14,18 @@ public class DeliveryMapper {
         dto.setVolume(delivery.getVolume());
         dto.setTimeWindow(delivery.getTimeWindow());
         dto.setStatus(delivery.getStatus());
-        dto.setTourId(delivery.getTour() != null ? delivery.getTour().getId() : null);
+        dto.setAddress(delivery.getAddress());
+        dto.setPreferredTimeSlot(delivery.getPreferredTimeSlot());
+        dto.setPlannedTime(delivery.getPlannedTime());
+        dto.setDate(delivery.getDate());
+
+        // Kanakhdo l ID dial l tour o l customer
+        if (delivery.getTour() != null) {
+            dto.setTourId(delivery.getTour().getId());
+        }
+        if (delivery.getCustomer() != null) {
+            dto.setCustomerId(delivery.getCustomer().getId());
+        }
         return dto;
 
     }
@@ -27,7 +38,10 @@ public class DeliveryMapper {
         delivery.setVolume(dto.getVolume());
         delivery.setTimeWindow(dto.getTimeWindow());
         delivery.setStatus(dto.getStatus());
-
+            delivery.setAddress(dto.getAddress());
+            delivery.setPreferredTimeSlot(dto.getPreferredTimeSlot());
+            delivery.setPlannedTime(dto.getPlannedTime());
+            delivery.setDate(dto.getDate());
         return delivery;
     }
 

@@ -24,6 +24,12 @@ public class TourService {
         return optimizer.calculateOptimalTour(warehouse,deliveries);
     }
 
+
+    public List<Delivery> calculateOptimalTour(Warehouse warehouse, List<Delivery> deliveries) {
+        log.info("Appel de l'optimizer: {}", optimizer.getClass().getSimpleName());
+        // Howa ghir kaydewwez l khdma l l'optimizer l s7i7 (AI)
+        return optimizer.calculateOptimalTour(warehouse, deliveries);
+    }
     public double getTotalDistance(Warehouse warehouse,List<Delivery> orderedDeliveries){
         if(orderedDeliveries == null||orderedDeliveries.isEmpty()) return 0.0;
         double totalDistance = 0.0;

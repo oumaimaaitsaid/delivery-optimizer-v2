@@ -38,12 +38,16 @@ spring:
   ai:
     ollama:
       base-url: http://localhost:11434
+      chat:
+        model: gemma:2b
+
+  # ...
 
 # =========================================
 # Configuration de l'Optimizer
 # =========================================
 optimizer:
-  type: "NN"
+  type: "AI"
 
 # =========================================
 # Configuration du Logging
