@@ -10,12 +10,12 @@ L'objectif principal est d'ajouter un troisième optimiseur basé sur **Spring A
 
 * **Core:** Spring Boot 3.2.0 (Java 17)
 * **Data:** Spring Data JPA (Hibernate)
-* **Base de données:** H2 (pour `dev`) & PostgreSQL (pour `qa`, *si configuré*)
+* **Base de données:** H2 (pour `dev`) & PostgreSQL (pour `qa`)
 * **Migrations:** Liquibase (remplace `ddl-auto` et `data.sql`)
 * **API:** Spring Web (REST)
 * **Doc API:** Springdoc-OpenAPI (Swagger)
 * **IA (LLM):** Spring AI
-* **Moteur IA Local:** Ollama (avec les modèles `gemma:2b` ou `mistral`)
+* **Moteur IA Local:** Ollama (avec les modèles `gemma:2b` )
 * **Conteneurisation:** Docker
 * **Utilitaires:** Lombok, Jackson (avec le module `jackson-datatype-hibernate6`)
 
